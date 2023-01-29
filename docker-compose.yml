@@ -1,0 +1,32 @@
+version: '3'
+services:
+    webserver:
+        build: 
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        restart: always
+        ports:
+            - 8090:80
+        volumes:
+            - ./www:/var/www/html/
+    db:
+      image: mysql
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: tutopassword
+        MYSQL_DATABASE: seminaire_db
+        MYSQL_USER: userseminaire
+        MYSQL_PASSWORD: passer
+      ports:
+            - 3308:3306
+    phpMyAdmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 8070:80
+        restart: always
+        environment:
+            - PMA_HOST=db
+        depends_on:
+            - db
+
